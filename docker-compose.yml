@@ -1,4 +1,23 @@
 services:
+  client-react-vite:
+    image: client-react-vite
+    build:
+      context: ./client-react/
+      dockerfile: Dockerfile.nonginx
+    init: true
+    volumes:
+      - type: bind
+        source: ./client-react/
+        target: /usr/src/app/
+      - type: volume
+        target: /usr/src/app/node_modules 
+      - type: bind
+        source: ./client-react/vite.config.js
+        target: /usr/src/app/vite.config.js
+    networks:
+      - frontend
+    ports:
+      - 5173:5173
   client-react-nginx:
     image: client-react-nginx
     build:
